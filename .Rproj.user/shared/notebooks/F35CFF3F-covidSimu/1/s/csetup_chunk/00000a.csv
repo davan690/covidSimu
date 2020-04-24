@@ -1,0 +1,5 @@
+"0","workers_no_test <- read.csv(""://download.data.public.lu/resources/covid-19-midterm-projection-for-construction-worker-release-on-april-20th/20200424-091408/simulation-construction-workers20apr-no-test-no-trace.csv"")
+"
+"2","cannot open file '://download.data.public.lu/resources/covid-19-midterm-projection-for-construction-worker-release-on-april-20th/20200424-091408/simulation-construction-workers20apr-no-test-no-trace.csv': No such file or directory"
+"2","Error in file(file, ""rt"") : cannot open the connection
+"
