@@ -74,6 +74,8 @@ Source: https://data.public.lu/fr/organizations/university-of-luxembourg-1/
 
 Layout based on https://jjallaire.shinyapps.io/shiny-biclust/
 
+Dashboard source on Github: https://github.com/b-rodrigues/covidSimu
+
 Row
 -----------------------------------------------------------------------
 
@@ -113,6 +115,8 @@ Open data provided by the Ministry of Health, Luxembourg.
 This app merely shows the data made available by the ministry. No transformation is made on the data.
 
 Source: https://data.public.lu/fr/datasets/donnees-covid19/
+
+Dashboard source on Github: https://github.com/b-rodrigues/covidSimu
 
 Row
 -----------------------------------------------------------------------
