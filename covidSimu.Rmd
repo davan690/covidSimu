@@ -1,5 +1,5 @@
 ---
-title: "Results of a COVID-19 Simulation Model"
+title: "COVID-19 in Luxembourg - Dashboard made with Open Data"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -13,7 +13,7 @@ library(shiny)
 library(tidyverse)
 library(xts)
 library(dygraphs)
-library(ggthemes)
+library(readxl)
 
 main_categories <- c("Covid-19 midterm projection for continued Lockdown",
                      "Covid-19 midterm projection for a general exit on May 4th",
@@ -39,7 +39,17 @@ workers_50 <- read.csv("https://download.data.public.lu/resources/covid-19-midte
 full_data <- bind_rows(
     list(lockdown_continued, general_ext, workers_no_test, workers_25, workers_50)
 )
+
+
+temp_xlsx <- tempfile()
+
+download.file("https://data.public.lu/fr/datasets/r/bad0c25e-2397-4739-9916-1f9d60625f03", temp_xlsx)
+
+covid_sante <- read_xlsx(temp_xlsx)
 ```
+
+Simulation results from uni.lu
+=====================================  
 
 Inputs {.sidebar}
 -----------------------------------------------------------------------
@@ -51,10 +61,9 @@ selectInput(inputId = "datasetName",
             choices = unique(full_data$dataset))
 
 selectInput(inputId = "seriesName",
-            label = "Choose one or more series",
+            label = "Choose one series",
             choices = c("ICU.occupancy", "Total.cumulative.cases", "Number.of.deaths"),
             multiple = FALSE, selected = c("Total.cumulative.cases"))
-
 ```
 
 Open data provided by the University of Luxembourg. This data shows simulations of different exit
@@ -71,8 +80,6 @@ Row
 ### Simulation results
     
 ```{r}
-
-#shinipsum::random_dygraph()
 dfInput <- reactive({
         filtered_data <- full_data %>% 
           filter(dataset == input$datasetName) %>% 
@@ -84,26 +91,48 @@ dfInput <- reactive({
 renderDygraph({
     df <- dfInput()
     dygraph(df) %>% 
-        dyRangeSelector(dateWindow = c("2020-03-01", "2021-03-01"))
+         dyRangeSelector(dateWindow = c(head(df$Date, 1), tail(df$Date, 1)))
 })
-# 
-#     dfInput2 <- reactive({
-#         df %>% filter(Activities %in% main_categories,
-#                       Population %in% input$populationName,
-#                       day %in% input$dayName)
-#     })
-#     
-#   renderPlotly({
-# 
-#         df1 <- dfInput()
-# 
-#         p1 <- ggplot(df1, 
-#                      aes(x = Activities, y = time_in_minutes, fill = Population)) +
-#             geom_col(position = "dodge") + 
-#             theme_minimal() + 
-#             xlab("Activities") + 
-#             ylab("Time in minutes") +
-#             scale_fill_gdocs()
-# 
-#         ggplotly(p1)})
+```
+
+Min Health data 
+=====================================  
+
+Inputs {.sidebar}
+-----------------------------------------------------------------------
+
+```{r}
+selectInput(inputId = "seriesName_sante",
+            label = "Choose one or more series",
+            choices = colnames(covid_sante)[-which(colnames(covid_sante) == "Date")],
+            multiple = TRUE, selected = c("Total patients COVID ayant quitté l'hôpital"))
+
+```
+
+Open data provided by the Ministry of Health, Luxembourg.
+This app merely shows the data made available by the ministry. No transformation is made on the data.
+
+Source: https://data.public.lu/fr/datasets/donnees-covid19/
+
+Row
+-----------------------------------------------------------------------
+
+### Number of patients, patients admitted in intensive care, COVID tests and deaths
+    
+```{r}
+
+#shinipsum::random_dygraph()
+dfInput_sante <- reactive({
+        filtered_data <- covid_sante %>% 
+            mutate(Date = as.Date(Date)) %>% 
+            select(Date, input$seriesName_sante)
+        
+        xts(filtered_data[, -1], order.by = filtered_data$Date)
+    })
+
+renderDygraph({
+    df <- dfInput_sante()
+    dygraph(df) %>% 
+         dyRangeSelector(dateWindow = c(head(df$Date, 1), tail(df$Date, 1)))
+})
 ```
