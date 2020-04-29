@@ -43,9 +43,11 @@ full_data <- bind_rows(
 
 temp_xlsx <- tempfile()
 
-download.file("https://data.public.lu/fr/datasets/r/bad0c25e-2397-4739-9916-1f9d60625f03", temp_xlsx)
+download.file("https://data.public.lu/fr/datasets/r/bdcdc4dd-2922-415e-a075-d0367588f1d8", temp_xlsx)
 
-covid_sante <- read_xlsx(temp_xlsx)
+covid_sante <- read_xlsx(temp_xlsx) %>% 
+    rename_at(vars(contains("rapatri")), 
+              funs(paste0("Nombre cumulé de personnes testées pour COVID (le 26/03 des résultats de tests ont été rapatriés en masse)")))
 ```
 
 Simulation results from uni.lu
@@ -107,7 +109,7 @@ Inputs {.sidebar}
 selectInput(inputId = "seriesName_sante",
             label = "Choose one or more series",
             choices = colnames(covid_sante)[-which(colnames(covid_sante) == "Date")],
-            multiple = TRUE, selected = c("Total patients COVID ayant quitté l'hôpital"))
+            multiple = TRUE, selected = c("Total patients COVID ayant quitté l'hôpital (y compris hospitalisations de courte durée)"))
 
 ```
 
