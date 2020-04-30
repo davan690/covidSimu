@@ -43,7 +43,7 @@ full_data <- bind_rows(
 
 temp_xlsx <- tempfile()
 
-download.file("https://data.public.lu/fr/datasets/r/bdcdc4dd-2922-415e-a075-d0367588f1d8", temp_xlsx)
+download.file("https://data.public.lu/fr/datasets/r/1da1bb72-4450-4f60-915b-6c355db2e7fa", temp_xlsx)
 
 covid_sante <- read_xlsx(temp_xlsx) %>% 
     rename_at(vars(contains("rapatri")), 
