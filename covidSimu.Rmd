@@ -10,7 +10,7 @@ runtime: shiny
 ```{r setup, include=FALSE}
 library(flexdashboard)
 library(shiny)
-library(tidyverse)
+library(dplyr)
 library(xts)
 library(dygraphs)
 library(readxl)
@@ -46,6 +46,7 @@ temp_xlsx <- tempfile()
 download.file("https://data.public.lu/fr/datasets/r/1da1bb72-4450-4f60-915b-6c355db2e7fa", temp_xlsx)
 
 covid_sante <- read_xlsx(temp_xlsx) %>% 
+    mutate_at(vars(-Date), funs(as.numeric)) %>% 
     rename_at(vars(contains("rapatri")), 
               funs(paste0("Nombre cumulé de personnes testées pour COVID (le 26/03 des résultats de tests ont été rapatriés en masse)")))
 ```
@@ -109,7 +110,7 @@ Inputs {.sidebar}
 selectInput(inputId = "seriesName_sante",
             label = "Choose one or more series",
             choices = colnames(covid_sante)[-which(colnames(covid_sante) == "Date")],
-            multiple = TRUE, selected = c("Total patients COVID ayant quitté l'hôpital (y compris hospitalisations de courte durée)"))
+            multiple = TRUE, selected = c("Total patients COVID ayant quitté l'hôpital (hospitalisations stationnaires, données brutes)"))
 
 ```
 
