@@ -8,6 +8,12 @@ runtime: shiny
 ---
 
 ```{r setup, include=FALSE}
+
+# July2020
+# myPaths <- .libPaths("C:/Program Files/R/R-4.0.2/library")
+# myPaths <- c(myPaths)
+# .libPaths(myPaths)  # add new path
+# .libPaths()
 library(flexdashboard)
 library(shiny)
 library(dplyr)
