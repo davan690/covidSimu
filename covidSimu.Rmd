@@ -8,53 +8,65 @@ runtime: shiny
 ---
 
 ```{r setup, include=FALSE}
-
 # July2020
-# myPaths <- .libPaths("C:/Program Files/R/R-4.0.2/library")
+# myPaths <- .libPaths("C:/Program Files/R/R-4.0.1/library")
 # myPaths <- c(myPaths)
 # .libPaths(myPaths)  # add new path
 # .libPaths()
+
 library(flexdashboard)
 library(shiny)
 library(dplyr)
 library(xts)
 library(dygraphs)
 library(readxl)
-
+# 
 main_categories <- c("Covid-19 midterm projection for continued Lockdown",
                      "Covid-19 midterm projection for a general exit on May 4th",
                      "Covid-19 midterm projection for construction worker release on April 20th",
                      "Covid-19 midterm projection for constructino worker release with testing and 25% efficent backtracing",
                      "Covid-19 midterm projection for constructino worker release with testing and 25% efficent backtracing")
 
-lockdown_continued <- read.csv("https://download.data.public.lu/resources/covid-19-midterm-projection-for-continued-lockdown/20200424-090839/simulation-lockdown-continued.csv") %>% 
+lockdown_continued <- read.csv("https://download.data.public.lu/resources/covid-19-midterm-projection-for-continued-lockdown/20200424-090839/simulation-lockdown-continued.csv") %>%
     mutate(dataset = "lockdown_continued")
 
-general_ext <- read.csv("https://download.data.public.lu/resources/covid-19-midterm-projection-for-a-general-exit-on-may-4th/20200424-091111/simulation-general-exit-4may.csv") %>% 
+general_ext <- read.csv("https://download.data.public.lu/resources/covid-19-midterm-projection-for-a-general-exit-on-may-4th/20200424-091111/simulation-general-exit-4may.csv") %>%
     mutate(dataset = "general_ext")
 
-workers_no_test <- read.csv("https://download.data.public.lu/resources/covid-19-midterm-projection-for-construction-worker-release-on-april-20th/20200424-091408/simulation-construction-workers20apr-no-test-no-trace.csv") %>% 
+workers_no_test <- read.csv("https://download.data.public.lu/resources/covid-19-midterm-projection-for-construction-worker-release-on-april-20th/20200424-091408/simulation-construction-workers20apr-no-test-no-trace.csv") %>%
     mutate(dataset = "workers_no_test")
 
-workers_25 <- read.csv("https://download.data.public.lu/resources/covid-19-midterm-projection-for-construction-worker-release-on-april-20th-with-testing-and-back-tracing/20200424-091607/simulation-construction-workers20apr-tracing25.csv") %>% 
+workers_25 <- read.csv("https://download.data.public.lu/resources/covid-19-midterm-projection-for-construction-worker-release-on-april-20th-with-testing-and-back-tracing/20200424-091607/simulation-construction-workers20apr-tracing25.csv") %>%
     mutate(dataset = "workers_25")
 
-workers_50 <- read.csv("https://download.data.public.lu/resources/covid-19-midterm-projection-for-construction-worker-release-on-april-20th-with-testing/20200424-091730/simulation-construction-workers20apr-tracing50.csv") %>% 
+workers_50 <- read.csv("https://download.data.public.lu/resources/covid-19-midterm-projection-for-construction-worker-release-on-april-20th-with-testing/20200424-091730/simulation-construction-workers20apr-tracing50.csv") %>%
     mutate(dataset = "workers_50")
 
 full_data <- bind_rows(
     list(lockdown_continued, general_ext, workers_no_test, workers_25, workers_50)
 )
+#
+# saveRDS(full_data, "./data/fullDat.Rds")
 
+# full_data <- readRDS("./data/fullDat.Rds")
 
-temp_xlsx <- tempfile()
+# str(full_data)
+# temp_xlsx <- tempfile()
 
-download.file("https://data.public.lu/fr/datasets/r/1da1bb72-4450-4f60-915b-6c355db2e7fa", temp_xlsx)
+# full_data1 <- 
+  
+  download.file("https://data.public.lu/fr/datasets/r/1da1bb72-4450-4f60-915b-6c355db2e7fa", "./data/fullDat.Rds", quiet = FALSE )%>%
+# 
+# 
+# # 
+# library(dplyr)
+# 
+# covid_sante <- full_data1 
 
-covid_sante <- read_xlsx(temp_xlsx) %>% 
-    mutate_at(vars(-Date), funs(as.numeric)) %>% 
-    rename_at(vars(contains("rapatri")), 
+    # mutate_at(vars(-Date), funs(as.numeric), na.rm = TRUE) %>%
+    rename_at(vars(contains("rapatri")),
               funs(paste0("Nombre cumulé de personnes testées pour COVID (le 26/03 des résultats de tests ont été rapatriés en masse)")))
+
 ```
 
 Simulation results from uni.lu
@@ -112,7 +124,7 @@ Min Health data
 Inputs {.sidebar}
 -----------------------------------------------------------------------
 
-```{r}
+```{r eval = FALSE}
 selectInput(inputId = "seriesName_sante",
             label = "Choose one or more series",
             choices = colnames(covid_sante)[-which(colnames(covid_sante) == "Date")],
