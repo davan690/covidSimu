@@ -1,17 +1,0 @@
-]2;cbrunos@x86_64-conda_cos6-linux-gnu: ~/media/laragreen/Documents/covidSimu]1;..nts/covidSimu[0m[27m[24m[J[37m[[33m20-04-24 23:05[37m][00m [31mcbrunos[00m in [36m~/media/laragreen/Documents/covidSimu[00m ➤ [K[?1h=[?2004hggit init[?1l>[?2004l
-]2;git init]1;gitInitialized empty Git repository in /home/cbrunos/media/laragreen/Documents/covidSimu/.git/
-]2;cbrunos@x86_64-conda_cos6-linux-gnu: ~/media/laragreen/Documents/covidSimu]1;..nts/covidSimu[0m[27m[24m[J[37m[[33m20-04-24 23:19[37m][00m [31mcbrunos[00m in [36m~/media/laragreen/Documents/covidSimu[37m@[32mmaster[31mx [00m[00m[00m[31mx [00m ➤ [K[?1h=[?2004hggit remote add origin git@github.com:b-rodrigues/co [KvvidSimu.git[?1l>[?2004l
-]2;git remote add origin git@github.com:b-rodrigues/covidSimu.git]1;git]2;cbrunos@x86_64-conda_cos6-linux-gnu: ~/media/laragreen/Documents/covidSimu]1;..nts/covidSimu[0m[27m[24m[J[37m[[33m20-04-24 23:21[37m][00m [31mcbrunos[00m in [36m~/media/laragreen/Documents/covidSimu[37m@[32mmaster[31mx [00m[00m[00m[31mx [00m ➤ [K[?1h=[?2004hggit push -u origin master                   g  ggit status[?1l>[?2004l
-]2;git status]1;gitOn branch master
-
-No commits yet
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	[31m.Rproj.user/[m
-	[31mcovidSimu.Rmd[m
-	[31mcovidSimu.Rproj[m
-
-nothing added to commit but untracked files present (use "git add" to track)
-]2;cbrunos@x86_64-conda_cos6-linux-gnu: ~/media/laragreen/Documents/covidSimu]1;..nts/covidSimu[0m[27m[24m[J[37m[[33m20-04-24 23:21[37m][00m [31mcbrunos[00m in [36m~/media/laragreen/Documents/covidSimu[37m@[32mmaster[31mx [00m[00m[00m[31mx [00m ➤ [K[?1h=[?2004hggit add .g [?1l>[?2004l
-]2;git add .]1;git]2;cbrunos@x86_64-conda_cos6-linux-gnu: ~/media/laragreen/Documents/covidSimu]1;..nts/covidSimu[0m[27m[24m[J[37m[[33m20-04-24 23:21[37m][00m [31mcbrunos[00m in [36m~/media/laragreen/Documents/covidSimu[37m@[32mmaster[31mx [00m[00m[00m[31mx [00m ➤ [K[?1h=[?2004hggit commit da  -am " first     first commit"
